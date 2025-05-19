@@ -249,3 +249,20 @@ std::initializer_list
 2 Exercises.
 
 ==============================================
+
+std::vector               ====> Daten:  HEAP
+
+std::initializer_list     ====> Daten:  STACK
+
+std::list
+
+=============================================
+
+Aufgabe:
+
+Aufgaben zur Move-Semantik
+
+Einfache Realisierung einer Lambda-Funktion.
+
+
+
