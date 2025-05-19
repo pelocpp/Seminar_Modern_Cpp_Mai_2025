@@ -1,0 +1,251 @@
+=======================
+
+Modern C++
+
+Peter Loos
+
+Entwicklung / Schulung
+
+C/C++, Java, C#, Mobile Progr.  , JavaScript
+
+Back to the Roots: C++
+
+Guten Morgen
+
+=======================
+
+2 Tools:
+
+== Visual Studio
+
+== Github
+
+=======================
+
+Agenda:
+
+Was sind meine Erwartungen:
+
+== Überblick
+== Die Themen  XXX müssen drin sein
+== ...
+== Multithreading: Yes / No.
+
+
+-- Von C++ Classic nach Modern C++
+-- Unit Test Konzepte
+-- Alles was Neu ist :)
+-- 
+
+
+=======================
+
+To Do Liste:
+
+emplace - Funktionen
+
+noexcept
+
+std::function
+
+=======================
+
+== C++ ist eine der, wenn nicht die schwierigste Programmiersprache am Markt.
+
+== C ++ 17 / 20  // Online Compiler
+
+=======================
+
+Was ist eine Referenz:
+
+C++: Referenz: Ähnlich
+
+i)  Alias-Name für ein vorhandenes Objekt / Variable
+
+ii) Hinter den Kulissen: Adresse.
+
+Ähnlichkeiten zum Pointer:
+
+int& n = m;   // ERROR // Keine Null-Referenz
+
+Hauptgrund: Keine KOPIE.
+
+a + b: Ist ein temp. Objekt // es hat KEINEN Namen.
+
+Ab C++ 11:
+
+Es gibt einen ZWEITEN Referenz Typ:
+
+Dieser steht für temp. Objekte.
+
+Syntax: &&
+
+========================================
+
+Move Semantik:
+
+... 480    // temp. Objekt // wird freigegeben
+... 100    // Im Vector
+
+Ab C++ 11: Lösung: Move-Semantik
+
+
+
+
+... 550
+
+
+Frage:
+
+Warum ist der Kopier-Konstruktor vorhanden ???
+
+https://github.com/pelocpp/cpp_clean_performant_secure/blob/master/Clean_Performant_Code/Guidelines/Guidelines_Core_Cpp.md#link8
+
+=========
+
+... 2C0
+
+========
+
+Rule-of-Three:
+
+Zwingend notwendig, wenn Pointer (new / delete) in der Klasse
+vorhanden sind.
+
+Wenn nicht:
+
+class Point
+{
+public:
+    int m_x;
+    int m_y;
+};
+
+Für so eine Klasse muss ich KEINE Spezialmethode realisieren.
+
+==========================================================
+
+C++:
+
+Viele neue Sachen :)
+
+Aber:
+
+Vieles wird auf schon Vorhandenes abgebildet !
+
+zB: Lambda.
+
+"Schon Vorhandene:"   ==> Aufrufbares Objekt
+                      Klasse, die den operator() implementiert.
+
+                      ==> Lokale Klassen in einer Funktion, die den operator() implementieren.
+
+Aufrufbares Objekt:
+
+Wozu ???????????????????????????
+
+Sie treten in Erscheinung:
+
+a) bei STL - Algorithmen
+b) bei Lambdas
+c) bei std::variant
+d) sicherlich noch mehr 
+
+Why:  Hmmm: operator() schön .. ist ja wie eine Methode zu sehen:
+
+Wozu operator()  Hmm, ist eine Methode OHNE Namen :)
+
+Sortieren:  compare  ==> In der Doku müsste compare beschrieben werden.
+
+Bei operator() müssen nur noch die Parameter beschrieben werden.
+
+=========================================
+
+Lambda:   Sortieren.
+
+std::sort
+
+Vergleichskriterium:
+
+A) Globale Funktion
+
+B) Aufrufbares Objekt
+
+====================================
+
+Ist Referenz egal oder nicht ??????????????
+
+NICHT:  Syntax.
+
+ABER:   Performanz.
+
+Wie ????
+
+        bool operator() (int n1, int n2) const {
+
+            int z = n1;
+00007FF60E7F25CA  mov         eax,dword ptr [n1]  
+00007FF60E7F25D0  mov         dword ptr [z],eax  
+            int y = n2;
+00007FF60E7F25D3  mov         eax,dword ptr [n2]  
+00007FF60E7F25D9  mov         dword ptr [y],eax  
+
+        bool operator() (const int& n1, const int& n2) const {
+
+            int z = n1;
+00007FF7EA8B8DAB  mov         rax,qword ptr [n1]  
+00007FF7EA8B8DB2  mov         eax,dword ptr [rax]  
+00007FF7EA8B8DB4  mov         dword ptr [z],eax  
+            int y = n2;
+00007FF7EA8B8DB7  mov         rax,qword ptr [n2]  
+00007FF7EA8B8DBE  mov         eax,dword ptr [rax]  
+00007FF7EA8B8DC0  mov         dword ptr [y],eax  
+
+Fazit:
+
+A) Elementare Variablen:
+
+   i) Normalfall: Bin am Wert interessiert: Call by Value / Copy // SCHNELL // KEINE Referenz
+
+   ii) Zweiter Fall: Bin am Original interessiert:
+   
+           Call by Referenz  // Langsamer // Könnte Original ÄNDERN 
+                               oder schützen: const
+
+B) Objekte:
+
+ Sind groß, will man NICHT kopieren ========> Go for &
+
+ ========================================================
+
+ Cpp Insights
+
+ Capture Clause
+
+ ========================================================
+
+ Einem Lambda ist eine Klasse zugeordnet:
+
+ Cpp Insights
+
+ https://cppinsights.io/
+
+========================================================
+
+    struct Struct
+    {
+        int m_i;
+        int m_j;
+    };
+
+Die ganze Geschichte:
+
+==============================================
+
+Pause:
+
+std::initializer_list
+
+2 Exercises.
+
+==============================================
