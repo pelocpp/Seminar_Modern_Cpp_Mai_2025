@@ -540,5 +540,27 @@ Events:   +=  oder -=  abmelden.
 
 Delegates:  Wo kein -=:  Referenz-Count geht nicht auf 0.
 
+==========================================================
+
+const 
+
+constexpr
+
+Problem:   Wie / wo kann man dieses Feature in der Praxis einsetzen ???
+
+Embedded Programmer:
+
+Vieles kann man aus der kritischen Laufzeit (statischen Tabellen) rausziehen.
+
+in C#:
+
+https://github.com/dotnet/roslyn/issues/15079
+
+=======================================================
+
+Smart Pointer:
+=============
+
+
 
 

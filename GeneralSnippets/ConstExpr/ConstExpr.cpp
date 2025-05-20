@@ -26,9 +26,22 @@ namespace ConstExprComplex {
         {
             float real = m_real + other.m_real;
             float imag = m_imag + other.m_imag;
-            return { real, imag };
+            return Complex{ real, imag };
         }
     };
+
+    static void testLambdaAndConstepr()
+    {
+        auto nothing = []() {};
+
+        []() {} ();
+
+        auto sum = [](int n, int m) { return n + m; };
+
+        auto sum2 = [](int n, int m) { return n + m; } (11, 12);
+
+        constexpr auto sum3 = [](int n, int m) { return n + m; } (11, 12);
+    }
 
     static void testComplex()
     {
@@ -66,7 +79,7 @@ namespace ConstExprDynamicData {
 
     static void testDynamicData()
     {
-        constexpr int sum = naiveSum(10);
+        constexpr int sum = naiveSum(6);
         std::println("Sum from 1 up to 10: {}", sum);
     }
 }
@@ -140,6 +153,7 @@ namespace ConstExprPow {
 
 void main_constexpr()
 {
+    ConstExprComplex::testLambdaAndConstepr();
     ConstExprComplex::testComplex();
     ConstExprDynamicData::testDynamicData();
     ConstExprPow::testPower();
