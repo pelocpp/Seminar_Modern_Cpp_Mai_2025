@@ -6,13 +6,17 @@ module;
 
 #include <stdio.h>
 #include <windows.h>
-
+ 
 module modern_cpp:unique_ptr;
 
 namespace UniquePointerGeneral {
 
     static std::unique_ptr<int> loadUniquePointer()
     {
+        std::unique_ptr<int> zwei;
+
+      //  return std::make_unique<int>(100);
+
         std::unique_ptr<int> ptr{ std::make_unique<int>(100) };
         return ptr;
     }
@@ -24,7 +28,7 @@ namespace UniquePointerGeneral {
         std::println("*ptr:    {}", *ptr);
 
         // take ownership right now:
-        // std::unique_ptr<int> ptr2{ std::move(ptr) };
+        std::unique_ptr<int> ptr2{ std::move(ptr) };
     }
 
     static void storeUniquePointerSafe(const std::unique_ptr<int>& ptr)
@@ -50,6 +54,12 @@ namespace UniquePointerGeneral {
 
     static void test_01()
     {
+        //std::unique_ptr<int> p1;
+        //std::unique_ptr<int> p2;
+        //p1 = p2;
+
+
+
         // create a unique_ptr to an int with value 123
         std::unique_ptr<int> ptr1{ new int{ 123 } };
         // or
@@ -100,7 +110,7 @@ namespace UniquePointerGeneral {
         storeUniquePointer(ptr);
 
         // C++ Core Guidelines
-        storeUniquePointerAlternate(ptr.get());
+     //   storeUniquePointerAlternate(ptr.get());
 
         // does this work?
         std::println("*ptr:    {}", *ptr);

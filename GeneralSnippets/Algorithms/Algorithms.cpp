@@ -14,19 +14,192 @@ namespace Algorithms {
     // Global constants and types
     // =================================================================================
 
-    // static constexpr int VectorSize = 100'000'000;     // release
-    static constexpr int VectorSize = 10'000'000;         // debug
+     static constexpr int VectorSize = 100'000'000;     // release
+   // static constexpr int VectorSize = 10'000'000;         // debug
 
     // static constexpr int ArraySize = 50'000'000;       // release
     static constexpr int ArraySize = 10'000'000;          // debug
 
     // need array in global data space, stack isn't suited for large objects
     std::array<double, ArraySize> values;
+
     std::array<double, ArraySize> source;
     std::array<double, ArraySize> target;
 }
 
 namespace Algorithms {
+
+    // Die Anteile am Stack sind Fixed-Size !!!
+    class Person
+    {
+    private:
+        int* m_data;   // new ....  ==> Heap
+        std::vector<int> zahlen;  // daten  ==> Heap
+
+        // dyn. Array
+
+        // MUSS: Kopier-Konstruktor
+        Person (const Person&) {}
+
+        Person(Person&&) {}
+
+        //  std::unique_ptr  // Smart-Ptr
+    };
+
+
+    static auto test_stl_seminar_01()
+    {
+        std::vector<int> numbers;  // Array .. flexibel lang
+
+        numbers.reserve(80);  // Go for reserve
+
+        //numbers.push_back(1);
+        //numbers.push_back(2);
+        //numbers.push_back(3);
+        //numbers.push_back(4);
+        //numbers.push_back(5);
+        //numbers.push_back(6);
+        //numbers.push_back(7);
+
+        for (int i = 0; i < 100; ++i) {
+
+            numbers.push_back(2 * i);
+            std::println("Size: {} - Capacity: {}",
+                numbers.size(), numbers.capacity());
+        }
+
+        numbers.shrink_to_fit();
+        std::println("Size: {} - Capacity: {}",
+            numbers.size(), numbers.capacity());
+    }
+
+
+    static auto test_stl_seminar_02()
+    {
+        std::vector<int> numbers;
+
+        numbers.push_back(1);
+        numbers.push_back(2);
+        numbers.push_back(3);
+
+        // Position in diesem Container: Datentyp
+        std::vector<int>::iterator pos;
+        std::vector<int>::iterator last;
+
+        // Wie bekomme ich eine Position:
+        // STL Container: 2 Methoden // begin // end
+
+        pos = numbers.begin();
+        last = numbers.end();
+
+        // Welche Operationen // Methoden unterstützt eine Position / Iterator:
+        // operator*:       Zugriff auf das Element AN DER Position
+        // operator++
+        // operator==, operator!=
+
+        if (pos == last) {
+            return;
+        }
+        int value = *pos;
+        std::println("Value: {}", value);
+
+#if FRAGE
+        // Ooooooooooooooooooooooooooops
+        int* ptr = &(*pos);   // Das ist die Adresse des Iterators
+        *ptr = 123;
+
+        // Warum nicht so ???
+        *pos = 456;
+#endif
+
+        ++pos;
+        
+        if (pos == last) {
+            return;
+        }
+        value = *pos;
+        std::println("Value: {}", value);
+
+        ++pos;
+        if (pos == last) {
+            return;
+        }
+        value = *pos;
+        std::println("Value: {}", value);
+
+        ++pos;
+        if (pos == last) {
+            return;
+        }
+        value = *pos;
+        std::println("Value: {}", value);
+    }
+
+    static auto test_stl_seminar_03()
+    {
+        std::vector<int> numbers;
+
+        numbers.push_back(1);
+        numbers.push_back(2);
+        numbers.push_back(3);
+
+        //std::vector<int>::iterator start = numbers.begin();
+        //std::vector<int>::iterator end = numbers.end();
+
+        auto start = numbers.begin();
+        auto end = numbers.end();
+
+        for (auto it = start; it != end; ++it)
+        {
+            std::println("Value: {}", *it);
+        }
+    }
+
+    static auto test_stl_seminar_04()
+    {
+        std::vector<float> numbers;
+
+        numbers.push_back(1);
+        numbers.push_back(2);
+        numbers.push_back(3);
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [] (auto n ) {
+                std::println("Value: {}", n);
+            }
+        );
+    }
+
+    static auto test_stl_seminar_05()
+    {
+        std::vector<float> numbers;
+
+        numbers.push_back(1);
+        numbers.push_back(2);
+        numbers.push_back(3);
+
+        // Range-based for-Loop  // Syntactic sugar über eine Iteratoren-basierte SChleife
+        for ( auto elem : numbers) {
+            std::println("Value: {}", elem);
+        }
+    }
+
+    static auto test_stl_seminar ()
+    {
+        // test_stl_seminar_01();
+        //test_stl_seminar_02();
+        //test_stl_seminar_03();
+        // test_stl_seminar_04();
+        test_stl_seminar_05();
+    }
+
+
+
+
+
+
 
     namespace Initialization_Vector_Constant_Value {
 
@@ -38,7 +211,7 @@ namespace Algorithms {
         {
             std::println("std::vector: using a classic for-loop");
 
-            std::vector<double> values(VectorSize);
+            std::vector<double> values(VectorSize);  // reserve
 
             ScopedTimer watch{};
 
@@ -84,7 +257,7 @@ namespace Algorithms {
             ScopedTimer watch{};
 
             std::fill(
-                std::execution::par,
+                std::execution::par,    // C++ 17 // C++ 20
                 values.begin(),
                 values.end(),
                 123.0
@@ -130,7 +303,7 @@ namespace Algorithms {
             std::generate(
                 values.begin(),
                 values.end(),
-                []() { return 123.0; }
+                [] () { return 123.0; }  
             );
         }
 
@@ -192,6 +365,8 @@ namespace Algorithms {
             std::println("std::array: using std::fill");
 
             ScopedTimer watch{};
+
+           // std::
 
             std::fill(
                 values.begin(),
@@ -787,9 +962,13 @@ namespace Algorithms {
 
 void main_algorithms()
 {
+    //Algorithms::test_stl_seminar();
+    //return;
+
     // initialization of std::vector or std::array with a constant value
-    Algorithms::Initialization_Vector_Constant_Value::test_vector_constant_initialization();
+    //Algorithms::Initialization_Vector_Constant_Value::test_vector_constant_initialization();
     Algorithms::Initialization_Array_Constant_Value::test_array_constant_initialization();
+    return;
 
     // initialization of std::vector or std::array with a a varying value
     Algorithms::Initialization_Vector_Varying_Value::test_vector_varying_initialization();

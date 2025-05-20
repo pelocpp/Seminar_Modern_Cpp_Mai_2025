@@ -42,11 +42,13 @@ Was sind meine Erwartungen:
 
 To Do Liste:
 
-emplace - Funktionen
+emplace... - Funktionen  // Morgen (Templates)
 
 noexcept
 
-std::function
+std::function - check
+
+std::bind
 
 =======================
 
@@ -263,6 +265,280 @@ Aufgabe:
 Aufgaben zur Move-Semantik
 
 Einfache Realisierung einer Lambda-Funktion.
+
+
+=============================================
+
+Weiter:
+
+Besprechung
+
+Smart Pointer
+
+Algorithmen
+
+===================================
+
+auto:
+
+a) Vereinbarung von Variablen
+
+b) auto als Rückgabetyp
+
+c) auto als Parameter
+
+================================================
+
+STL // Container // Algorithmen // Iteratoren
+
+Von Grund auf betrachten ...
+
+Go - for STL // Container // Algorithmen // Iteratoren
+
+
+13 => 19 => 28 => 42 => 63
+
+Algorithmus:  Neue Länge = Alte Länge * 1.5;  // Mit int-Arithmetik 
+                                              // abrunden
+
+================================================
+
+Person p;
+
+C#:   Was ist "Person p;" in C# ???
+
+      Person p = new Person (...);
+
+
+C++:  Was ist "Person p;" in C++ ???
+
+      Ein komplettes Person Objekt !!!
+
+      Ginge aus:
+
+      Person* p = new Person (...);
+
+
+In der Tat:
+
+C++ ist deshalb komplexer als C#:
+
+C#:   Referenz-Semantik   (Ausnahme:  struct )
+
+C++:
+
+      Value-Semantik         // Wert-Semantik  // Stack
+      Dynamische-Semantik    // Heap
+
+// ==============================================
+
+Konzept der STL:
+
+STL Container             (std::vector)
+
+===> Zugriff auf die Elemente eines Containers
+
+Geht bei manchen Container mit operator[]:
+
+   Sind die sequentiellen Container:
+    std::vector
+    std::array
+
+STL Container // Zugriff: Transparenz // Austauschbarkeit:
+
+Lösung // Ansatz:
+
+A) STL Container
+
+B) STL Konzept: Position eines Elements in einem Container: Iterator.
+
+B1) Mit diesen Positionen kann man auf JEDEN STL Container zugreifen.
+
+   Position: STL Iterator // Synonym: Position.
+
+C) STL - Algorithmen  // einfache Vorgänge
+
+KONZEPT:   Losen Kopplung
+
+STL Container <=> STL Iteratoren <=> STL Algorithmus
+
+
+================================================
+
+
+Was ist using:
+
+using iterator
+
+Wie typedef a la C
+
+========================================
+
+std::make_move_iterator
+
+========================================
+
+
+Frage: 
+
+Kann man solche Iterationen auch selbst schreiben:
+
+Ja !!!
+
+========================================
+
+for_each
+
+Container c;
+
+for_each (auto elem : c) {
+}
+
+Gibt es auch in C++:
+
+Hinweis:
+Das KONZEPT der  Losen Kopplung
+STL Container <=> STL Iteratoren <=> STL Algorithmus
+wurde hiermit über den Haufen geworfen.
+
+// Warum sollten wir Algorithmen einsetzen ??????????????????
+
+Beispiel: Vorbelegung eines Containers.
+
+=====================================
+
+Suchen eines Elements in einem Feld // Container:
+
+for (int i = 0; i < Size(); ++i) {
+
+    if (Container[i] == zuSuchendesElement) {
+        break;
+    }
+}
+
+std::find_if:   Bauerntrick
+
+========================================================
+
+Smart Pointer:
+=============
+
+new / delete
+
+int* ptr = new int();
+<== ptr übergebe man in die Obhut eines Hüllenobjekts.
+
+Was ist das Problem von / mit new?
+
+Wir vergessen das delete!
+
+Idee:
+
+i) OO
+
+ii) Klassen: Konstruktoren und Destruktoren
+
+iii) Destruktoren: Wann werden die aufgerufen?
+
+     Am Ende des Scopes
+
+     {
+         Person p;
+         int* ptr;
+         Wrapper um einen Zeiger;
+
+
+     }   // automatisch: Destruktor an p aufgerufen.  // Determinismus
+
+iv)  Objekte und Zeiger zusammenführen:
+     Wir betrachten Hüllenobjekte um Zeiger:
+
+     Konstruktor   ==> new
+     Destruktor    ==> delete
+
+Grundprinzip:      std::auto_ptr
+
+Verfeinerungen: Haben unterschiedliche Strategien
+
+i) std::unique_ptr
+
+ii) std::shared_ptr / std::weak_ptr
+
+Strategie std::unique_ptr:
+
+Ein std::unique_ptr - Objekt kann zu EINEM Zeitpunkt im Programm nur EINMAL
+vorhanden sein.   // man kann das nicht kopieren. // Aber: verschieben !!!!!!!
+
+Strategie std::shared_ptr:
+
+Ein std::shared_ptr - Objekt kann zu EINEM Zeitpunkt im Programm MEHRERE
+Besitzer haben.   // man kann es kopieren.
+
+Destruktor: Zu betrachten ....
+
+// Schwache Ähnlichkeiten zum GC Prinzip.
+
+// ====================================================
+
+Wehrmutstropfen:
+
+std::shared_ptr funktioniert nicht immer !!!!!!!!!!!!!!!! WTF
+
+Lösung:
+
+std::weak_ptr:
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ?
+
+Haben wir zyklische Referenzen ?????????????
+
+Beispiel:
+
+Observer - Pattern ???
+
+Beobachten:
+
+Ziel-Objekt: Zustand // der kann sich ändern
+
+Client-Objekt: Diese interessieren sich für einen Zustandswechsel am Ziel-Objekt.
+
+Aussagen:
+
+== Ein (mehrere) Client-Objekt kennen das Ziel-Objekt.
+
+== Ein Client-Objekt kann sich zu diesem Zweck am Ziel-Objekt anmelden (register // attach).
+
+== Ein Ziel-Objekt kennt ein (mehrere) Client-Objekte, die sich angemeldet haben.
+
+
+Client-Objekt: kennt Ziel-Objekt.
+
+Ziel-Objekt: kennt Client-Objekte.
+
+Fazit:
+
+Client-Objekte:   std::shared_ptr
+
+Ziel-Objekt:      std::shared_ptr
+
+Im Ziel-Objekt gibt es eine Liste für die Client-Objekte:
+
+std::list  <  XXX  >   XXX = std::weak_ptr
+
+          Folge:       client.lock ()    <====== nullptr
+
+
+In der Zukunft:  std::shared_ptr  verwendest   <=============
+
+   Könnte das auch ein weak_ptr sein ??????????
+
+   Will ich beim Kopieren eines std::shared_ptr ein weiterer Besitzer sein ???????????
+
+Wie schaffe ich das in C#  ????
+
+Events:   +=  oder -=  abmelden.
+
+Delegates:  Wo kein -=:  Referenz-Count geht nicht auf 0.
 
 
 

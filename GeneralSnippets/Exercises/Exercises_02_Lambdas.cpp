@@ -37,7 +37,11 @@ namespace Exercises_Lambdas {
             }
         };
 
-        auto lambda = [](int val) -> bool {
+        auto shortestLambda = [] () {};
+
+       // bool (*fptr) (int);
+
+        auto lambda = [] (int val) -> bool {
 
             if ((val % 2) == 0) {
                 std::cout << val << " is even." << std::endl;
@@ -48,6 +52,24 @@ namespace Exercises_Lambdas {
                 return false;
             }
         };
+
+        static bool rufeLambdaAuf_01(std::function<bool(int)> func, int para) {
+
+            bool result = func(para);
+            return result;
+        }
+
+        static bool rufeLambdaAuf_02(auto func, int para) {
+
+            bool result = func(para);
+            return result;
+        }
+
+        static void test_frage_01() {
+
+            auto result = rufeLambdaAuf_02(lambda, 123);
+            std::println("{}", result);
+        }
 
         static void testExercise_01a() {
 
@@ -60,8 +82,13 @@ namespace Exercises_Lambdas {
 
             // testing callable object
             EvenOrOdd callableObj;
+
             value = 15;
             result = callableObj(value);
+
+            result = callableObj.operator() (value);  // Ironisch gemeint
+                                                      // aber korrektes C++
+
             std::cout
                 << "evenOrOdd of " << value << ": "
                 << std::boolalpha << result << std::endl;
@@ -390,6 +417,9 @@ namespace Exercises_Lambdas {
 void test_exercises_lambdas()
 {
     using namespace Exercises_Lambdas;
+    Exercise_01::test_frage_01();
+    return;
+
     Exercise_01::testExercise_01();
     Exercise_02::testExercise_02();
     Exercise_03::testExercise_03();

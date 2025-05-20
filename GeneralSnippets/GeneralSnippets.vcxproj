@@ -255,6 +255,7 @@
     <ClCompile Include="InputOutputStreams\Module_InputOutputStreams.ixx" />
     <ClCompile Include="Invoke\Invoke.cpp" />
     <ClCompile Include="Invoke\Module_Invoke.ixx" />
+    <ClCompile Include="Iterator_Beispiel.cpp" />
     <ClCompile Include="Lambda\Lambda01.cpp" />
     <ClCompile Include="Lambda\Lambda03.cpp" />
     <ClCompile Include="Lambda\Lambda02.cpp" />
