@@ -10,9 +10,97 @@ namespace OptionalExamples {
     * Introduction
     */
 
+    class Employee
+    {
+        operator int() {
+            return 123;
+        }
+    };
+
+    class AnyClass
+    {
+    private:
+        int m_value;
+
+    public:
+        AnyClass() : AnyClass{ 0 } {}  // constructor chaining
+
+        explicit AnyClass(int n) {
+            m_value = n;
+        }
+
+        explicit AnyClass(double n) {
+            m_value = (int) n;
+
+        }
+
+        explicit AnyClass(auto n) : m_value{} {  
+        }
+
+        operator bool() { 
+            return true; 
+        }
+
+        operator int() {
+            return 123;
+        }
+    };
+
+    //bool cmp(const Employee& a, const Employee& b)
+    //{
+    //    return a.getAge() < b.getAge();
+    //}
+
     static void test_01_optional() {
 
+        // ====================================
+        // 2 Richtungen:
+        // 
+        // Klasse nach Wert :  n = ac;    ac (Objekt) wird nach Wert gewandelt
+        //                     ===> Type Conversion Operator  // operator type
+        // Wert nach Klasse:   ac = 123;  Wert nach Objekt
+        //                     ===> Type Conversion Contructors
+        //                     Alle Konstruktoren mit EINEM Parameter sind solche Konstruktoren
+
+        AnyClass ac;
+
+        AnyClass ac2{ 123 };
+
+        AnyClass ac3{ 123.456 };
+
+        AnyClass ac4{ "123.456" };
+
+        int n{};
+        n = ac;
+
+        if (ac) {
+            ;
+        }
+
+        // Nebeneffekt // implizite Konvertierung
+        // Achtung: Mit Keyword explicit wird das eine explizite Konvertierung
+        ac = (AnyClass) 123;  // !!!!!!!! ????????? Wertzuweisung / Assignment
+
         std::optional<int> someValue{ 123 };
+
+        int m = 123;
+
+        std::optional<int*> ptrValue2{ };
+        // nullptr
+
+        auto z = ptrValue2.value();
+
+        std::optional<int*> ptrValue{ nullptr };
+
+        auto b = ptrValue.has_value();
+
+        auto z2 = ptrValue.value();
+
+        ptrValue = &m;
+
+        if (ptrValue.has_value()) {
+            std::println("Value: {}", someValue.value());
+        }
 
         if (someValue.has_value()) {
             std::println("Value: {}", someValue.value());
@@ -63,8 +151,10 @@ namespace OptionalExamples {
 
         contact.setPhone("123456789");
 
-        if (contact.getPhone()) {
-            std::println("Number: {}", *contact.getPhone());
+        auto phone = contact.getPhone();
+
+        if (phone.has_value()) {
+            std::println("Number: {}", phone.value());
         }
         else {
             std::println("No Number found!");

@@ -42,9 +42,9 @@ Was sind meine Erwartungen:
 
 To Do Liste:
 
-emplace... - Funktionen  // Morgen (Templates)
+emplace... - Funktionen  // Morgen (Variadische Templates)
 
-noexcept
+noexcept - check
 
 std::function - check
 
@@ -564,13 +564,15 @@ Smart Pointer:
 =======================================================
 
 Mittwoch:
---------
+---------
 
-std::optional
+std::optional - check
 
-std::tuple
+Structured Binding - check
 
-std::array
+std::tuple - check
+
+std::array - check
 
 ---
 
@@ -578,7 +580,7 @@ Unterschiede zwischen den unterschiedlichen Cast-Operationen
 
 ---
 
-SSO
+SSO - check
 
 std::string_view
 
@@ -590,11 +592,169 @@ emplace
 
 ---
 
-noexcept
+noexcept  - check
+
+=======================================================
+
+int value;    <=== Wert
+
+if (value == 0)   ...
+
+if (value == -1)   ...
+
+if (value == -MaxInt)   ...
+
+Frage: Haben wir einen Wert oder nicht ...
+
+int  value;    <=== Wert        ???? 
+bool hasValue;  true / false    false !!!
+
+Paar ===> std::optional
+
+C#:   int? value;
+
+===========================================
+
+explicit
+
+Womit ist ein std::tuple ähnlich ???
+
+Ein std::tuple ist wie eine struct - für Schreibfaule.
 
 
+=========================================================
+
+SSO: Feature
+
+Small String Optimization
+
+Optimierung für kurze Zeichenketten.
+
+std::string
+
+=========================================================
+
+Online Compiler:  Easy Going   ... um was auszuprobieren ...
+
+https://wandbox.org/
 
 
+======================================================
 
+C/C++:
 
+C ist in C++ enthalten !!!
+
+C-Style Arrays:
+
+int zahlen [10];  // Fixed-Size Array
+
+versus
+
+std::array <int, 10> zahlen;  // Fixed-Size Array
+
+2 Optionen
+
+std::array ist in Wahrheit eine Hülle / ein Wrapper um ein C-Style Array
+
+Frage: Why should we go for std::array ????????
+
+==============================================
+
+int zahlen [10];  // Fixed-Size Array
+
+Wie übergebe ich dieses Feld an ein Unterprogramm ????
+
+void unterprogramm (int* anfang, size_t length)
+{
+    // Wie lange ist der Speicherbereich hinter ptr ???????
+
+    // Ein Pointer beschreibt keine Länge: Array Decay // verkümmern
+}
+
+unterprogramm (zahlen, 10);
+
+1. große Vorteil von std::array:  Size !!!
+
+2. große Vorteil : Robustheit
+
+zahlen[i] = 123;    // hier wird i NICHT überprüft
+
+Why: Performanz
+
+std::array: zahlen.at(i) = 123;   // hier wird i überprüft !!!
+
+Langsamer: Jepp
+
+3. große Vorteil : for_each // Range-based Loop
+
+4. Vorteil: nützliche Methoden: fill zB
+
+5. Vorzeil: copying via operator= is supported
+            operator== compiles and does expected value comparison
+
+6. Vorteil: Funktionen können ein std::array zurückliefern !!! Kein C-Style Array
+
+Offenes Problem: std::array "elegant" an Unterprogramme übergeben.
+
+7. Vorteil: 
+
+std::array   ==>  std::span  
+std::vector  ==>  std::span  
+
+"Spanne" :  Anfang und die Länge
+
+=========================================
+
+std::array<T>        FIXED-SIZE
+
+std::vector<T>       Variable Sized
+
+Beim Iterieren:
+
+std::array<T> kann im globalen Datensegment / am Stack liegen:
+Da ist der Zugriff DIREKT
+
+std::vector<T> kann im globalen Datensegment / am Stack liegen:
+ABER DIE ELEMENTE LIEGEN AM HEAP
+Damit ist der Zugriff auf die Elemente INDIREKT
+
+Weiß ist die Anzahl der Elemente von vorneherein: IMMER go - for - std::array<T>
+Ein FIXED-SIZE Container ist schneller.
+
+// =========================================
+// Gegenüberstellung:
+
+void main()
+{
+   unterprogramm();  // wenige, kleine Zwischenergebnisse 
+}
+
+// Anzahl der BigData in etwa bekannt.
+
+static std::array<T> g_data;  // global variable
+static std::vector<T> g_data;
+
+void unterprogramm()
+{
+    std::vector<T> data;   // T = BigData
+    vs.
+    std::array<T> data;    // T = BigData  // EHER NICHT ... ABER
+    vs.
+    std::array<T>* pdata = new std::array<T>;  // NOOOOOOOOOOOOOOO
+}
+
+=======================================================
+
+Wann kann man No-throw Garantie aussprechen:
+
+Einfache Methoden 
+
+Nur Wertzuweisungen.
+
+Wenn das der Fall ist: noexcept.
+
+==> Optimierung: Es wird kein Code für das Eintreten von Ausnahmen abgesetzt.
+
+=======================================================
 

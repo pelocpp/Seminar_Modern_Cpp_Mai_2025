@@ -2,6 +2,10 @@
 // Array.cpp // std::array // std::to_array // std::span
 // =====================================================================================
 
+module;
+
+#include <span>
+
 module modern_cpp:class_array;
 
 namespace StdArray {
@@ -12,7 +16,7 @@ namespace StdArray {
     static void test_01() {
 
         // initialization variants
-        [[maybe_unused]] std::array<int, 5> array1;
+        [[ maybe_unused ]]std::array<int, 5> array1;
 
         std::array<int, 5> array2{};
 
@@ -20,6 +24,7 @@ namespace StdArray {
 
         std::array<int, 5> array4 = { 1, 2, 3, 4, 5 };  // initializer list
 
+        // CTAD: Class Template Argument Deduction
         std::array array5 = { 1, 2, 3, 4, 5 };          // CTAD - type is deduced to std::array<int, 5>
     }
 
@@ -79,6 +84,8 @@ namespace StdArray {
         std::println("Length: {}", array.size());
     }
 
+
+
     template<typename T, int Length>
     void print(const std::array<T, Length>& array) {
         std::println("Length: {}", array.size());
@@ -107,7 +114,8 @@ namespace StdArray {
         std::println("front:{}", array.front());
         std::println("back: {}", array.back());
 
-        array.fill(123);
+        array.fill(123);   // memset ... oder Sonstiges ...
+
         for (auto elem : array) {
             std::println("{}", elem);
         }
@@ -209,7 +217,7 @@ namespace StdArray {
         // copying via operator= isn't supported:
         // array type 'std::string [4]' is not assignable
         std::string other[4];
-        // other = cArray;  
+        //other = cArray;  
 
         // algorithm std::copy works
         std::copy(
@@ -359,23 +367,23 @@ namespace StdArray {
 
     static void test_31() {
 
-        //int carr[]{ 1, 2, 3, 4, 5 };
-        //printArray(carr);
-
-        //std::array arr{ 6, 7, 8, 9, 10 };
-        //printArray(arr);
-
-        //std::vector<int> vec{ 1, 3, 5, 7, 9 };
-        //printArray(vec);
-
         int carr[]{ 1, 2, 3, 4, 5 };
-        printArray(std::span{ carr });
+        printArray(carr);   // implizite Typkonvertierung
 
         std::array arr{ 6, 7, 8, 9, 10 };
-        printArray(std::span{ arr });
+        printArray(arr);
 
-        std::vector vec{ 1, 3, 5, 7, 9 };
-        printArray(std::span{ vec });
+        std::vector<int> vec{ 1, 3, 5, 7, 9 };
+        printArray(vec);
+
+        //int carr[]{ 1, 2, 3, 4, 5 };
+        //printArray(std::span{ carr });
+
+        //std::array arr{ 6, 7, 8, 9, 10 };
+        //printArray(std::span{ arr });
+
+        //std::vector vec{ 1, 3, 5, 7, 9 };
+        //printArray(std::span{ vec });
     }
 
     // --------------------------------------------------------------------
@@ -403,27 +411,43 @@ namespace StdArray {
         std::vector vec{ 1, 3, 5, 7, 9 };
         printArrayConst(vec);
     }
+
+
+    static void test_seminar() {
+
+        std::vector<int> vec{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+       // std::span sp{ vec };
+
+        printArray(std::span{ vec });
+
+        vec.push_back(11);
+
+        printArray(std::span{ vec });
+    }
 }
 
 void main_array()
 {
     using namespace StdArray;
 
-    test_01();
-    test_02();
-    test_03();
-    test_04();
-    test_05();
-    test_06();
-    test_07();
-    test_08();
-    test_09();
-    test_10();
-    test_11();
-    test_20();
-    test_30();
-    test_31();
-    test_32();
+    //test_01();
+    //test_02();
+    //test_03();
+    //test_04();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
+    //test_09();
+    //test_10();
+    //test_11();
+    //test_20();
+    //test_30();
+    //test_31();
+    //test_32();
+
+    test_seminar();
 }
 
 // =====================================================================================

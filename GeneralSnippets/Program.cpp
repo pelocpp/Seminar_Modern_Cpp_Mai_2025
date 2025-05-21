@@ -66,8 +66,8 @@ int main()
         //main_metaprogramming_02(); 
         //main_modularized_standard_library(); 
         //main_modules();
-        //main_move_semantics();
-        //main_optional();
+        main_move_semantics();
+     //   main_optional();
         //main_perfect_forwarding();
         //main_placement_new();
         //main_println();
@@ -81,7 +81,7 @@ int main()
         //main_sfinae();
         //main_shared_ptr();
         //main_source_location();
-        //main_sso();
+      //  main_sso();
         //main_static_assert();
         //main_string_view();
         //main_structured_binding();
@@ -93,7 +93,7 @@ int main()
         //main_templates_specialization();
         //main_to_underlying();
         //main_transform();
-        //main_tuple(); 
+       // main_tuple(); 
         //main_two_phase_name_lookup();
         //main_type_erasure();
         //main_type_traits();
@@ -107,7 +107,7 @@ int main()
         //main_virtual_override_final();
         //main_weak_pointer();
 
-       main_exercises();
+      // main_exercises();
     }
     catch (const std::exception& ex) {
         std::println("Exception: {}", ex.what());

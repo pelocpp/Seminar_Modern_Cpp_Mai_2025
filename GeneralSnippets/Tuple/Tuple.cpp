@@ -102,6 +102,8 @@ namespace TupleSamples {
         std::println("Value: {}", val);
         std::println("Name:  {}", name);
 
+        // Mix: std::tuple, Range-Based Loop (for_each), Structured Binding
+        // C++ 17
         for (const auto& [id, abbr, val, name] : mySheet)
         {
             std::println("Id:    {}", id);
@@ -124,16 +126,17 @@ namespace TupleSamples {
         mySheet.push_back(row3);
 
         // C++ 14: std::tie
+        // ================
         int id{};
         char abbr{};
         double val{};
         std::string name{};
 
-        std::tie(id, abbr, val, name) = mySheet[0];
+        std::tie(id, abbr, val, name) = mySheet[0]; // std::tuple
 
         // or (note: std::ignore)
         // 
-        // std::tie(id, std::ignore, val, name) = mySheet[0];
+        std::tie(id, std::ignore, val, name) = mySheet[0];
 
         std::println("Id:    {}", id);
         std::println("Abbr:  {}", abbr);
@@ -182,7 +185,7 @@ void main_tuple()
     using namespace TupleSamples;
     test_01();
     test_02();
-    test_03();
+    test_03(); 
     test_04();
     test_05(); 
 }
