@@ -84,9 +84,6 @@ namespace VariadicTemplatesSeminar {
 
     void test_seminar() {
 
-        // Dennis Ritchie
-        // int************ ptr;  // C declaration // C Parser for declarators;
-
         std::unique_ptr<int> up = std::make_unique <int>(123);
 
         std::unique_ptr<Unknown> up2 = std::make_unique <Unknown>(1, 2, 3);

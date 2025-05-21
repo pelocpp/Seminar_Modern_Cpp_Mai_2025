@@ -40,17 +40,29 @@ Was sind meine Erwartungen:
 
 =======================
 
-To Do Liste:
+Donnerstag:
+==========
 
-emplace... - Funktionen  // Morgen (Variadische Templates)
+Literatur
 
-noexcept - check
-
-std::function - check
+Unterschiede zwischen den unterschiedlichen Cast-Operationen
 
 std::bind
 
-Unterschiede zwischen den unterschiedlichen Cast-Operationen
+Perfect Forwarding
+
+std::variant // Type Traits
+
+Folding
+
+Concepts und Requirements
+
+Benutzerdefinierte Literale
+
+std::transform // std::back_inserter
+
+...............
+
 
 
 =======================
@@ -833,3 +845,21 @@ Templates:   Alexander Stepanov
                             // Generische Programmierung
 
 Bibliothek:  STL   // Templates 
+
+==================================================
+
+std::vector<int> fibo;
+fibo.resize (20);
+
+std::generate (
+  fibo.begin(), 
+  fibo.end(), 
+  [] () {}      // irgendwie braucht man die "alten" Werte,
+                // um die nächste Fibo-Zahl zu berechnen
+ );
+
+ 
+==================================================
+
+Donnerstag:
+===========

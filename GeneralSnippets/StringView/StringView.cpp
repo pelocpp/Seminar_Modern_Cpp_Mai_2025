@@ -8,9 +8,17 @@ module;
 #include <print>
 
 module modern_cpp:string_view;
-
-
 namespace StringViewDemonstration {
+
+    static void test_frage_zu_std_string()
+    {
+        std::string s{};
+
+        for (size_t i{}; i != 100; ++i) {
+            s.insert(0, "A");
+            std::println("Size: {:02} - Cap: {:02} - Value: {}", s.size(), s.capacity(), s);
+        }
+    }
 
     static void test_seminar()
     {
@@ -133,9 +141,11 @@ namespace StringViewDemonstration {
 void main_string_view()
 {
     using namespace StringViewDemonstration;
+    test_frage_zu_std_string();
+    return;
     //test_seminar();
     //test_01();
-    test_02();
+    // test_02();
     //test_03();
     //test_04();
     //test_05();
