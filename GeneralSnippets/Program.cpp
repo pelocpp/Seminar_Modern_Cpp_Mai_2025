@@ -83,7 +83,7 @@ int main()
         //main_source_location();
       //  main_sso();
         //main_static_assert();
-        main_string_view();
+      //  main_string_view();
         //main_structured_binding();
         //main_templates_class_basics_01();
         //main_templates_class_basics_02();
@@ -107,7 +107,7 @@ int main()
         //main_virtual_override_final();
         //main_weak_pointer();
 
-      // main_exercises();
+       main_exercises();
     }
     catch (const std::exception& ex) {
         std::println("Exception: {}", ex.what());

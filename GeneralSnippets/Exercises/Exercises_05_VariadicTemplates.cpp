@@ -11,14 +11,32 @@ namespace Exercises_VariadicTemplates {
         // =============================================================
         // Logical And - with variadic templates
 
-        template<typename T>
-        bool andAll(T cond) {
-            return cond;
-        }
+        //template<typename T>
+        //bool andAll(T cond) {
+        //    return cond;
+        //}
+
+        //template<typename T, typename ... TRest>
+        //bool andAll(T cond, TRest ... conds) {
+
+        //    bool tmp = andAll(conds...);
+        //    bool result = cond && tmp;
+        //    return result;
+
+        //    // return cond && andAll(conds...);
+        //}
 
         template<typename T, typename ... TRest>
         bool andAll(T cond, TRest ... conds) {
-            return cond && andAll(conds...);
+            
+            if constexpr (sizeof... (conds) == 0)
+            {
+                return cond;
+            }
+            else
+            {
+                return cond && andAll(conds...);
+            }
         }
 
         // or
@@ -37,7 +55,7 @@ namespace Exercises_VariadicTemplates {
             bool result = andAll(true, false, true);
             std::cout << std::boolalpha << result << std::endl;
 
-            result = andAll(true, (1 > 2), true);
+            result = andAll(true, false, true);
             std::cout << std::boolalpha << result << std::endl;
 
             result = andAll(true, true, true, true, true, true, true, true, true, true);
@@ -367,11 +385,11 @@ void test_exercises_variadic_templates()
 {
     using namespace Exercises_VariadicTemplates;
     Exercise_01::testExercise_01();
-    Exercise_02::testExercise_02();
-    Exercise_03::testExercise_03();
-    Exercise_04::testExercise_04();
-    Exercise_05::testExercise_05();
-    Exercise_06::testExercise_06();
+    //Exercise_02::testExercise_02();
+    //Exercise_03::testExercise_03();
+    //Exercise_04::testExercise_04();
+    //Exercise_05::testExercise_05();
+    //Exercise_06::testExercise_06();
 }
 
 // =====================================================================================
