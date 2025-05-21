@@ -355,6 +355,7 @@
     <ClCompile Include="VirtualOverrideFinal\VirtualOverrideFinal.cpp" />
     <ClCompile Include="WeakPtr\Module_WeakPtr.ixx" />
     <ClCompile Include="WeakPtr\WeakPtr.cpp" />
+    <ClCompile Include="Zeichenketten.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.md" />

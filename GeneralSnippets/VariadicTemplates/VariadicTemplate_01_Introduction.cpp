@@ -4,6 +4,99 @@
 
 module modern_cpp:variadic_templates;
 
+
+namespace VariadicTemplatesSeminar {
+
+    //  C++ 11
+    template <typename T>
+    void printer(T n) {
+        std::println("{}", n);
+    }
+
+    // primary template
+    template <typename T, typename ... U>      // einpacken Typen          
+    void printer(T n, U ... m) {         // einpacken Werte
+        std::println("{}", n);
+        printer(m ...);                    // auspacken
+    }
+
+    // C++  17
+    // primary template
+    //template <typename T, typename ... U>      // einpacken Typen          
+    //void printer(T n, U ... m) {               // einpacken Werte
+    //    std::println("{}", n);
+    //    
+    //    if constexpr ( sizeof... (m) > 0 )
+    //    {
+    //        printer(m ...);                        // auspacken
+    //    }
+    //}
+
+    void test_seminar_01() {
+
+        printer<int, int, int, int, int>( 1, 2, 3, 4, 5 );
+    }
+
+    // ==========================================================================
+    // Why: 1. Antwort: std::make_unique
+
+    class Unknown{
+    private:
+        int m_var1;
+        int m_var2;
+        int m_var3;
+
+    public:
+        Unknown() : m_var1{ -1 }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor()" << std::endl;
+        }
+
+        Unknown(int n) : m_var1{ n }, m_var2{ -1 }, m_var3{ -1 } {
+            std::cout << "c'tor(int)" << std::endl;
+        }
+
+        Unknown(int n, int m) : m_var1{ n }, m_var2{ m }, m_var3{ -1 } {
+            std::cout << "c'tor(int, int)" << std::endl;
+        }
+
+        Unknown(int n, int m, int k) : m_var1{ n }, m_var2{ m }, m_var3{ k } {
+            std::cout << "c'tor(int, int, int)" << std::endl;
+        }
+
+        friend std::ostream& operator<< (std::ostream&, const Unknown&);
+    };
+
+    std::ostream& operator<< (std::ostream& os, const Unknown& obj) {
+        os
+            << "var1: " << obj.m_var1
+            << ", var2: " << obj.m_var2
+            << ", var3: " << obj.m_var3;
+
+        return os;
+    }
+
+    template <typename T, typename ... TArgs>
+    std::unique_ptr<T> my_make_unique(TArgs ... params)
+    {
+        std::unique_ptr<T> tmp{ new T { params ...  } };
+        return tmp;
+    }
+
+    void test_seminar() {
+
+        // Dennis Ritchie
+        // int************ ptr;  // C declaration // C Parser for declarators;
+
+        std::unique_ptr<int> up = std::make_unique <int>(123);
+
+        std::unique_ptr<Unknown> up2 = std::make_unique <Unknown>(1, 2, 3);
+
+        std::unique_ptr<Unknown> up3 = 
+            my_make_unique <Unknown, int, int, int>(1, 2, 3);
+    }
+
+}
+
 namespace VariadicTemplatesIntro_01 {
 
     // ====================================================================
@@ -352,6 +445,9 @@ namespace VariadicTemplatesIntro_06 {
 
 void main_variadic_templates_introduction()
 {
+    VariadicTemplatesSeminar::test_seminar ();
+    return;
+
     VariadicTemplatesIntro_01::test_printer_01();
 
     VariadicTemplatesIntro_02::test_my_make_unique();

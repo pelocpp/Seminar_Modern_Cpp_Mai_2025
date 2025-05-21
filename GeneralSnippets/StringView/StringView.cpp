@@ -2,9 +2,31 @@
 // StringView.cpp // Klasse std::string_view
 // =====================================================================================
 
+module;
+
+#include <string_view>
+#include <print>
+
 module modern_cpp:string_view;
 
+
 namespace StringViewDemonstration {
+
+    static void test_seminar()
+    {
+        const char* s = "AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+
+        std::string s2 { "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };
+
+        // Für const char*:
+        // Eine angenehmen Wrapper / Hülle:
+
+        std::string_view s3{ "BBBBBBBBBBBBBBBBBBBBBBBBBBBB" };
+
+       // Vorteil des std::string_view Wrappers: Länge mit dabei !!!
+        
+     //   s3[0] = '?';
+    }
 
     static void test_01()
     {
@@ -18,15 +40,26 @@ namespace StringViewDemonstration {
 
     static void test_02()
     {
-        std::string s{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };
+        int a = 123;
+        int b = 456;
 
-        std::string_view sv{ s };
+        int* a_ptr = &a;
+        int* b_ptr = &b;
 
-        std::println("{}", sv);
+        b_ptr++;
+        *b_ptr = 789;
 
-        s += "BBBBBBBBBBBBBBBBBBBBBBBBBBBB";        // Caution: the content of s is reallocated !
+        //std::string s{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };
+       
+        //const char* ptr = s.data();
 
-        std::println("{}", sv);
+        //std::string_view sv{ s.data()};
+
+        //std::println("{}", sv);
+
+        //s += "BBBBBBBBBBBBBBBBBBBBBBBBBBBB";                           // Caution: the content of s is reallocated !
+
+        //std::println("{}", sv);
     }
 
     static void test_03()
@@ -100,11 +133,12 @@ namespace StringViewDemonstration {
 void main_string_view()
 {
     using namespace StringViewDemonstration;
-    test_01();
+    //test_seminar();
+    //test_01();
     test_02();
-    test_03();
-    test_04();
-    test_05();
+    //test_03();
+    //test_04();
+    //test_05();
 }
 
 // =====================================================================================

@@ -657,6 +657,9 @@
     <ClCompile Include="Iterator_Beispiel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Zeichenketten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.md">

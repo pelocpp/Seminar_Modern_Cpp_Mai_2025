@@ -50,6 +50,9 @@ std::function - check
 
 std::bind
 
+Unterschiede zwischen den unterschiedlichen Cast-Operationen
+
+
 =======================
 
 == C++ ist eine der, wenn nicht die schwierigste Programmiersprache am Markt.
@@ -574,21 +577,18 @@ std::tuple - check
 
 std::array - check
 
----
-
-Unterschiede zwischen den unterschiedlichen Cast-Operationen
 
 ---
 
 SSO - check
 
-std::string_view
+std::string_view - check
 
 ---
 
-Variadic Templates
+Variadic Templates - check
 
-emplace
+emplace - check
 
 ---
 
@@ -758,3 +758,78 @@ Wenn das der Fall ist: noexcept.
 
 =======================================================
 
+Zeichenketten:
+
+a) const char* cp = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";  C-Zeichenkette: 
+
+b) std::string
+
+Frage:
+=====
+
+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+Wo liegt diese ????
+
+Wo liegt diese NICHT ???? HEAP
+
+Häufig / manchmal:
+
+Konstante Zeichenketten:
+
+Diese sollten /  müssen nicht am HEAP liegen !!!
+Ansonsten: Indirekten Zugriff:
+
+// es geht nicht um KURZE Zeichenketten
+std::string s {"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"};
+
+Das geht performanter:
+
+
+Beispiel:  std::string_view
+
+const char* ptrStart;
+
+==> substr (8, 5);  8 = Offset, 5 = Länge
+
+std::string_view sub;
+
+const char* ptrStart + 8;
+size_t len = 5;
+
+std::cout  // println 
+
+Go for std::string_view - soweit es geht
+
+a) Konstante Zeichenkette
+
+b) Wenn keine explizite Zeichenkettenverarbeitung:
+
+   .insert
+
+
+======================================
+
+Variadische Templates
+
+"..."
+
+a) Werdet ihr ab nächster vermutlich nicht verwenden.
+
+b) Whyyyyyyyyyyyyyyy ???
+
+Transport von Daten von A nach B // Typsicher // Performant
+
+Verständnis 
+
+emplace / C++  11
+
+// =======================================
+
+C++          Bjarne Stroustrup   // C++ with Classes // OO
+
+Templates:   Alexander Stepanov
+
+                            // Generische Programmierung
+
+Bibliothek:  STL   // Templates 

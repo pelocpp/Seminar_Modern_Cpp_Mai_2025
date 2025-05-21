@@ -66,7 +66,7 @@ int main()
         //main_metaprogramming_02(); 
         //main_modularized_standard_library(); 
         //main_modules();
-        main_move_semantics();
+        //main_move_semantics();
      //   main_optional();
         //main_perfect_forwarding();
         //main_placement_new();
@@ -83,7 +83,7 @@ int main()
         //main_source_location();
       //  main_sso();
         //main_static_assert();
-        //main_string_view();
+       // main_string_view();
         //main_structured_binding();
         //main_templates_class_basics_01();
         //main_templates_class_basics_02();
@@ -98,7 +98,7 @@ int main()
         //main_type_erasure();
         //main_type_traits();
         //main_unique_ptr();
-        //main_variadic_templates_introduction();
+        main_variadic_templates_introduction();
         //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
         //main_variadic_templates_mixins();
