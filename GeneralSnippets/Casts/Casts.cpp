@@ -53,6 +53,17 @@ namespace DiverseCasts {
     {
         {
             // static_cast
+             int n = 10;                    // 1 byte
+             int* addN = &n;
+             char* cp = reinterpret_cast<char*>(&n); // 4 bytes // compile error
+             *cp = '!';
+             *addN = 234234234234;
+        }
+
+
+
+        {
+            // static_cast
             int  a = static_cast<int>(123.456);  // double demoted to int
         }
 
@@ -61,13 +72,13 @@ namespace DiverseCasts {
             char c = 10;          // 1 byte
             int* p = (int*) &c;   // 4 bytes, works ?!?
 
-            // *p = 5;            // run-time error: stack corruption
+        //   *p = 5;            // run-time error: stack corruption
         }
 
         {
             // static_cast
-            //char c = 10;                    // 1 byte
-            //int* p = static_cast<int*>(&c); // 4 bytes // compile error
+             //char c = 10;                    // 1 byte
+             //int* p = static_cast<int*>(&c); // 4 bytes // compile error
         }
 
         enum class Color { red, green, blue };
@@ -75,8 +86,8 @@ namespace DiverseCasts {
         {
             // int n = Color::blue;  // a value of type "Color" cannot be used to initialize an entity of type "int"
 
-            int color = static_cast<int>(Color::blue);
-            std::println("Color: {}", color);
+            //int color = static_cast<int>(Color::blue);
+            //std::println("Color: {}", color);
         }
     }
 
@@ -85,9 +96,16 @@ namespace DiverseCasts {
         {
             // reinterpret_cast
             char c = 10;                           // 1 byte
+
+            int p = static_cast<int>(c);   // 4 bytes // compiles
+        }
+
+        {
+            // reinterpret_cast
+            char c = 10;                           // 1 byte
             int* p = reinterpret_cast<int*>(&c);   // 4 bytes // compiles
 
-            // *p = 5;                                // run-time error: stack corruption
+       //     *p = 5;                                // run-time error: stack corruption
         }
 
         struct MyStruct
@@ -123,7 +141,7 @@ namespace DiverseCasts {
         {
             const int constVar = 123;
 
-            // print(&constVar);   // error: cannot convert argument 1 from 'const int*' to 'int*'
+            //print(&constVar);   // error: cannot convert argument 1 from 'const int*' to 'int*'
 
             print(const_cast<int*>(&constVar)); // allowed
         }
@@ -131,21 +149,28 @@ namespace DiverseCasts {
 
     static void test_05_explicit_conversions_dynamic_cast()
     {
+        // Polymorphmus: Methodenaufruf // Runtime
+
         class Base
         {
         public: 
             virtual void test() { std::println("Base"); }
+            virtual void rotate() { std::println("Base"); }
         };
             
         class Derived : public Base
         {
+          //  Movement m_move;   // hat - ein // Aggregation
+
+
         public:
             void test() override { std::println("Derived"); }
         };
 
         {
             Derived* child = new Derived();
-            Base* base = dynamic_cast<Base*>(child); // ok
+            Base* base = static_cast<Base*>(child); // ok
+          //  Base* base = child; // ok
             base->test();
         }
 
@@ -182,15 +207,15 @@ namespace DiverseCasts {
             // Failure: the base pointer points to a Base instance
             // Success: the base pointer points to a Derived instance
 
-            Base* base = new Derived();  // toggle between Base and Derived
-            Derived* child = dynamic_cast<Derived*>(base);
+            //Base* base = new Base();  // toggle between Base and Derived
+            //Derived* child = static_cast<Derived*>(base);
 
-            if (child == 0) {
-                std::println("Null pointer returned!");
-            }
-            else {
-                std::println("dynamic_cast successful!");
-            }
+            //if (child == 0) {
+            //    std::println("Null pointer returned!");
+            //}
+            //else {
+            //    std::println("dynamic_cast successful!");
+            //}
         }
 
         {

@@ -2,6 +2,10 @@
 // Variant.cpp // std::variant
 // =====================================================================================
 
+module;
+
+#include <variant>
+
 module modern_cpp:variant;
 
 namespace VariantDemo {
@@ -109,13 +113,93 @@ namespace VariantDemo {
 
     // -------------------------------------------------------------------
 
+    // primary template
+    template <typename T>
+    struct my_remove_reference {
+        using type = T;
+    };
+
+    // konkrete, bestimmte 'T's: Template spezialisieren
+    // Beispiel: T = long
+    // Ist nur ein Beispiel - das primäre Template tut das ja auch
+    template <>
+    struct my_remove_reference<long> {
+        using type = long;
+    };
+
+    // best match
+    template <typename T>
+    struct my_remove_reference<T&> {
+        using type = T;
+    };
+
+
+
+
+
+
+
     static void test_04() {
 
-        std::variant<int, double, std::string> v{ 123 };
+        std::vector<double> vec;
+
+        //double elem;
+
+        std::vector<double>::value_type value;
+        std::vector<double>::iterator iter;
+
+
+        //union XXX
+        //{
+        //    int m_i;
+        //    double m_d;
+        //    std::string m_s;
+        //};
+
+        std::variant<int, double, std::string> v{ 123 };    // Stack  // std::vector
+
+        // std::variant  ===>  "Type Erasure" 
+
+        auto sizeVariant = sizeof(v);  
+        std::println("Sizeof(v): {}", sizeVariant);
 
         // using a generic visitor (matching all types in the variant)
-        auto visitor = [](const auto& elem) {
-            std::println("{}", elem);
+        auto visitor = []( auto const& elem) {
+
+            //auto len = sizeof(elem);   // Brute-force
+            //std::println("Sizeof(elem): {}", len);
+
+            // Fallunterscheidung für die verschiedenen Typen
+
+            using ElemType = decltype (elem);
+
+            //using ElemtTypeWithoutRef = my_remove_reference<ElemType>::type;
+            //using ElemtTypeWithoutRefAndConst = std::remove_const<ElemtTypeWithoutRef>::type;
+
+            using ElemtTypeWithoutConst = std::remove_const<ElemType>::type;
+
+            ElemtTypeWithoutConst dummy{};
+
+            using ElemtTypeWithoutRefAndConst = my_remove_reference<ElemtTypeWithoutConst>::type;
+            
+            if constexpr ( std::is_same<ElemtTypeWithoutRefAndConst, int>::value == true)
+            {
+                std::println("Integer: {}", elem);
+            }
+            else if constexpr (std::is_same<ElemtTypeWithoutRefAndConst, double>::value == true)
+            {
+                std::println("double: {}", elem);
+            }
+            else if constexpr (std::is_same<ElemtTypeWithoutRefAndConst, std::string>::value == true)
+            {
+                std::println("std::string: {}", elem);
+                size_t size = elem.size();
+                std::println("size(): {}", size);
+            }
+            else
+            {
+                std::println("Unbekannt: {}", elem);
+            }
         };
 
         std::visit(visitor, v);
@@ -149,7 +233,7 @@ namespace VariantDemo {
 
         std::variant<int, double, std::string> var{ 123 };
 
-        Visitor visitor{};
+        Visitor visitor{};    // Aufrufbares Objekt // operator()
 
         std::visit(visitor, var);
 
@@ -337,17 +421,17 @@ void main_variant()
 {
     using namespace VariantDemo;
 
-    test_01();
-    test_02();
-    test_03();
+    //test_01();
+    //test_02();
+    //test_03();
     test_04();
-    test_05();
-    test_06();
-    test_07();
-    test_08();
-    test_09();
-    test_10();
-    test_11();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
+    //test_09();
+    //test_10();
+    //test_11();
 }
 
 // =====================================================================================

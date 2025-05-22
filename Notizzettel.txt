@@ -861,3 +861,100 @@ std::generate (
 
 Donnerstag:
 ===========
+
+peter.loos@gmx.de
+-----------------
+
+Literatur
+
+Unterschiede zwischen den unterschiedlichen Cast-Operationen
+
+std::bind
+
+Perfect Forwarding
+
+// Pause 
+
+std::variant // Type Traits
+
+Folding
+
+Concepts und Requirements
+
+Benutzerdefinierte Literale
+
+std::transform // std::back_inserter
+
+Unit Test Konzepte
+
+
+std::bind:  Hülle // Wrapper 
+
+Alternative:  Lambda
+
+
+// ================================================
+
+// Folding
+
+Modernes C++:
+
+Einen Operator:
+
+int n = 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
+
+int n = (((1 + 2) + 3) + 4) + 5 + 6 + 7 + 8 + 9;
+
+int n = n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9;
+
+Performanz-Hub: Folding  // Abrollen.
+
+n1, n2, n3 ====>  Parameter einer Funktion:
+
+Folding:  Bonus-Track:
+
+Viele Funktionen der REIHE nach ausführen.
+
+=========================================================
+
+Was kann der std::variant ?
+
+Er kann Daten unterschiedlichen Typs aufnehmen,
+zu einem Zeitpunkt aber nur EINEN Wert.
+
+Hat Ähnlichkeiten zu einer Union.
+
+Beispiel:
+
+Excel-Sheet:  Zelle // Cell:
+
+Zeichenkette, numerischer Wert, Datum, Währung (Currency), ...
+
+Cell ==> std::variant.
+
+Ähnliche Klasse:  std::any 
+
+std::variant:   Man kann einen std::variant "besuchen" :)
+
+Java // C#:  Reflection
+
+C++:         Reflection "für Arme"
+
+<type_traits>   Typ Spuren
+
+
+Interesse:    C++ Metaprogramming.
+
+==============================================
+
+std::any
+
+Benutzerdefinierte Literale
+
+std::transform // std::back_inserter
+
+Book- Store
+
+The Return of „printf”: std::print(ln) in C++ 23
+
+==============================================

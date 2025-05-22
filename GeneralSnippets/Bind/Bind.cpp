@@ -23,7 +23,7 @@ namespace Bind {
             numbers.begin(),
             numbers.end(),
             result.begin(),
-            std::bind((double (*)(double, int)) std::pow, _1, 2)
+            std::bind((double (*)(double, int)) std::pow, _1, 2)  // Wrapper
         );
 
         // or
@@ -45,6 +45,7 @@ namespace Bind {
             numbers.begin(),
             numbers.end(),
             result.begin(),
+            // Manchmal:  Könnte inline im Code eingesetzt werden
             [](auto value) {
                 double result = std::pow(value, 3);
                 return result;

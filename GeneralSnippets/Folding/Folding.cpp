@@ -8,6 +8,69 @@ module;
 
 module modern_cpp:folding;
 
+namespace Folding_Seminar {
+
+    template <typename ... TArgs>
+    auto addierer(TArgs ... args) {
+
+        auto result = (... + args);
+
+        return result;
+    }
+
+    auto addiererEx(auto ... args) {
+
+        auto result = (... + args);
+
+        return result;
+    }
+
+    template <typename ... TArgs>
+    auto subtrahierer(TArgs ... args) {
+
+       // auto result = (... - args);
+        auto result = (args - ...);
+
+        return result;
+    }
+
+    void printSingleElement(auto args) {
+        std::cout << " = " << args;
+    }
+
+    template <typename T, typename ... TArgs>
+    void  printer (T n, TArgs ... args) {
+
+        // (((init op pack1) op pack2) op ...) op packN
+        
+        // std::cout << arg1 << arg2 << arg3 << ... << argN;
+
+        // ( std::cout << ... << args );
+
+        //int n;
+        //int m;
+        //n = 1, m = 2;  // , Operator: Sequenz-Operator
+
+        std::cout << n;
+
+        ( ... , ( /*std::cout << " = " << args*/ printSingleElement(args) ));  // 90% : Arithm. Ausdruck
+    }
+
+    void test_folding() {
+
+        auto result = addierer(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        // 1 - (2 - 3) = 2
+        // (1 - 2) - 3 = -4
+        result = subtrahierer(1, 2, 3);
+
+        printer(1, 2, 3, "ABC", 123.456, 111l, std::string{"Finish"});
+
+        std::cout << std::endl;
+    }
+
+}
+
 namespace Folding {
 
     /* folding examples: introduction
@@ -200,8 +263,12 @@ namespace Folding {
     }
 }
 
+
 void main_folding()
 {
+    Folding_Seminar::test_folding ();
+    return;
+
     using namespace Folding;
     test_01();
     test_02();
