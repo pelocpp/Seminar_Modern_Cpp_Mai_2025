@@ -60,7 +60,7 @@ int main()
         //main_lambdas();
         //main_lambda_and_closure();
         //main_lambdas_this_closure();
-        //main_literals();
+       // main_literals();
         //main_memory_leaks_detection();
         //main_metaprogramming_01();
         //main_metaprogramming_02(); 
@@ -92,7 +92,7 @@ int main()
         //main_templates_template_parameter_02();
         //main_templates_specialization();
         //main_to_underlying();
-        //main_transform();
+       // main_transform();
        // main_tuple(); 
         //main_two_phase_name_lookup();
         //main_type_erasure();

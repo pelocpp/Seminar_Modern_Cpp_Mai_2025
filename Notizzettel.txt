@@ -947,9 +947,9 @@ Interesse:    C++ Metaprogramming.
 
 ==============================================
 
-std::any
+std::any - check
 
-Benutzerdefinierte Literale
+Benutzerdefinierte Literale // Konstante - check
 
 std::transform // std::back_inserter
 
@@ -958,3 +958,177 @@ Book- Store
 The Return of „printf”: std::print(ln) in C++ 23
 
 ==============================================
+
+Benutzerdefinierte Literale // Konstante:
+
+123
+
+123.456
+
+123.456f
+
+123l
+
+123ll
+
+Frage:
+
+123_km
+123_pfund
+123_euros
+123_farbe     class Color
+
+"14:09:30"_uhrzeit
+
+"22.05.2025"_datum
+
+"4412308"_iban  => IBAN  // Klasse:  DE 
+
+Das GEHT IN C++ !!!
+
+Programmiersprache:
+
+Lexikon: Umfasst alle Wörter der Sprache.
+
+== 123
+== if, then,
+== temperature, value
+
+Syntax
+
+C++: Das Lexikon von C++ ist erweiterbar.
+
+Beispiel:
+
+123_rgb ;   //   class Color
+
+UDL : user defined literal
+
+Wie geht's:   operator""    Literal - Operator
+
+Binäre Darstellung:  Zweier-Komplement
+
+57 im  Zweier-Komplement:
+
+57 / 2 = 28 Rest 1
+28 / 2 = 14 Rest 0
+14 / 2 = 7 Rest  0
+7 / 2 = 3 Rest   1
+3 / 2 = 1 Rest   1
+1 / 2 = 0 Rest   1
+
+11'1001
+
+==============================================
+
+Viele Algorithmen, die - in irgend einer Weise - von A nach B arbeiten:
+
+Kopieren: von A nach B   std::copy
+
+Umwandeln: von A nach B  std::transform
+
+setzen intern den operator= ein.
+
+ABER:
+
+Es gibt einen Schalter:  von operator=   nach push_back:
+
+Da nehmen wir einen Adapter: von operator=   nach push_back:
+
+std::back_inserter: Dieser Adapter ruft push_back auf !!!!!
+
+======================================================
+
+Finale: All - In.
+
+
+== std::variant
+
+== Variadische Templates
+
+== Homogene vs. heterogene Container
+
+== Generische Lambda-Funktionen
+
+== Dynamischer vs. statischer Polymorphismus
+
+
+Praxis-nahem Beispiel:  Buchhandlung // Bookstore.
+
+C# - Developer:
+---------------
+
+  Universelle Basisklasse Object: "Alles leitet sich von Object ab"
+
+  'List' als eine Art flex. großer Container: Da kann alles rein.
+
+  Ist so eine Art  "heterogener Container"
+
+C++ - Developer:
+----------------
+
+  std::vector:   Vom Typ T:    Homogener Container: Jedes Element ist vom Typ T.
+
+  Heterogener Container: Ginge auf die Art
+
+                         std::vector < std::variant <
+
+Praxis-nahem Beispiel:  Buchhandlung // Bookstore.
+==================================================
+
+Bookstore:
+
+Verwaltet verschiedene Medien:
+
+== Book
+== CD
+== DVD
+== BlueRay
+== Vinyl
+
+2 Ansätze vorstellen:
+
+a) Klassisch: Interface // Schnittstellenkonzept // Vererbung
+
+   Im Stile (dynamischer) Polymorphismus
+
+b) Modern: std::variant, Variadische Templates, Generische Lambda-Funktionen
+
+   Im Stile (statischer) Polymorphismus
+
+==> Abschnitt "Type Erasure":
+
+STL:  std::function, std::variant und std::any: Dieses Konzept verwenden.
+
+==========================================================
+
+a) Classic Style:
+
+========================================================
+
+Virtuelle Methoden:
+
+"sind die nebeneinander":
+
+Ähnlich: 
+
+A) Wenn eine Klasse virtuelle Methoden hat:
+
+  Dann bekommt sie zusätzlich - pro Klasse - eine Tabelle (Array) hinzugefügt.
+
+  vtable : virtual function pointer table.
+
+B) Was steht in diesem Array drin: Pro virtueller Methode deren Adresse.
+
+C) Wenn eine virtuelle Methode aufgerufen wird:
+
+   NEIN: obj.function();  // Adresse
+
+   Class Foo::tabelle[index_der_Methode] : indirekte Aufruf.
+
+https://pabloariasal.github.io/2017/06/10/understanding-virtual-tables/
+
+// ==============================================================
+
+2. Ansatz:
+

@@ -8,7 +8,7 @@ namespace AnySamples {
 
     static void test_01_any()
     {
-        std::any a{ 1 };
+        std::any a{ 1 };  // Free - Style Variant
         
         {
             std::string type{ a.type().name() };

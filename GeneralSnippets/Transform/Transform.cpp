@@ -2,7 +2,7 @@
 // Transform.cpp // std::transform
 // =====================================================================================
 
-module modern_cpp:transform;
+module modern_cpp:transform; 
 
 namespace AlgorithmTransform {
 
@@ -14,23 +14,31 @@ namespace AlgorithmTransform {
         std::unordered_map<std::string, size_t> phonebook
         {
             { "Hans Meier" ,     12345678 },
-            { "Franz Schneider", 81726354 },
-            { "Hubert Mueller",  87654321 }
+            { "Hubert Mueller",  87654321 },
+            { "Franz Schneider", 81726354 }
         };
 
         for (const auto& [name, number] : phonebook) {
             std::cout << name << ": " << number << std::endl;
         }
 
-        std::vector<std::string> names(phonebook.size());  // set size of vector (!)
+        std::vector<std::string> names(phonebook.size() );  // set size of vector (!)
+       // std::vector<std::string> names;  
 
         // std::transform on a single range - retrieve names from phonebook
         std::transform(
             phonebook.begin(),
             phonebook.end(),
+
             names.begin(),      // beginning of the destination range
-            [](const std::pair<const std::string, size_t>& entry) {
-                return std::get<0>(entry);
+            //std::back_inserter (names),
+            
+            //[](const std::pair<const std::string, size_t>& entry) {
+            //    return std::get<0>(entry);
+            //}
+            [](const auto& entry) {
+                const auto& [name, phone] = entry;
+                return name;
             }
         );
 

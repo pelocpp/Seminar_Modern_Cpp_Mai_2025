@@ -291,7 +291,11 @@ namespace VariantDemo {
     static void test_07() {
 
         std::vector<std::variant<int, long, long long, float, double>>
-            vec = { 100, 200l, 300ll, 400.5f, 500.5 };
+            vec = { 100, 200l, 300ll, 400.5f, 500.5 
+        };
+
+
+
 
         // display each value
         std::println("Values:      ");
@@ -421,17 +425,17 @@ void main_variant()
 {
     using namespace VariantDemo;
 
-    //test_01();
-    //test_02();
-    //test_03();
+    test_01();
+    test_02();
+    test_03();
     test_04();
-    //test_05();
-    //test_06();
-    //test_07();
-    //test_08();
-    //test_09();
-    //test_10();
-    //test_11();
+    test_05();
+    test_06();
+    test_07();
+    test_08();
+    test_09();
+    test_10();
+    test_11();
 }
 
 // =====================================================================================
